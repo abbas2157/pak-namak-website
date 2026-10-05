@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Handle X-XSRF-Token Header
+    RewriteCond %{HTTP:x-xsrf-token} .
+    RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
+
+    # Serve real files (css, images, storage uploads) from public/
+    RewriteRule ^((css|js|images|storage|build)/.+|favicon\.ico|robots\.txt)$ public/$1 [END]
+
+    # Everything else (including .env, vendor/, storage/ etc.) goes to Laravel
+    RewriteRule ^ index.php [END]
+</IfModule>
