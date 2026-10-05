@@ -23,7 +23,10 @@ class SettingController extends Controller
         'youtube' => ['YouTube URL', 'nullable|url|max:255'],
         'tiktok' => ['TikTok URL', 'nullable|url|max:255'],
         'whatsapp_link' => ['WhatsApp link (social icon)', 'nullable|url|max:255'],
-        'order_url' => ['"Order Now" button link', 'nullable|url|max:500'],
+        'order_url' => ['Salt order page link (Order Now menu)', 'nullable|url|max:500'],
+        'spice_order_url' => ['Masala order page link (Order Now menu)', 'nullable|url|max:500'],
+        'notify_email' => ['Send contact-form alerts to (email)', 'nullable|email|max:150'],
+        'map_embed_url' => ['Google Maps embed link (Contact page map)', 'nullable|url|max:1000'],
     ];
 
     public function edit()

@@ -3,24 +3,128 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'Home') | {{ $settings['site_name'] ?? 'Pak Namak & Masala Jaat' }}</title>
-    <meta name="description" content="@yield('description', 'Pak Namak & Masala Jaat — trusted supplier of high-quality salt, Dalla Namak, Khulla Namak, packed salt and premium Masala Jaat.')">
+@php
+    $siteName = $settings['site_name'] ?? 'Pak Namak & Masala Jaat (PVT) Limited';
+    $routeName = request()->route()?->getName();
+    $seoDefaults = config("seo.pages.$routeName");
+
+    // Title/description precedence: dashboard override -> config default -> view section.
+    $pageTitle = $seoDefaults
+        ? (($settings["seo_{$routeName}_title"] ?? '') ?: $seoDefaults['title'])
+        : trim($__env->yieldContent('title', 'Home')).' | '.$siteName;
+    $pageDescription = $seoDefaults
+        ? (($settings["seo_{$routeName}_description"] ?? '') ?: $seoDefaults['description'])
+        : trim($__env->yieldContent('description', config('seo.default_description')));
+    $pageImage = trim($__env->yieldContent('og_image', asset('images/og-image.jpg')));
+    $canonical = url()->current();
+    $robots = trim($__env->yieldContent('robots', 'index, follow, max-image-preview:large'));
+    $tagId = $settings['google_tag_id'] ?? config('seo.google_tag_id');
+
+    $orgId = route('home').'#organization';
+    $graph = [
+        array_filter([
+            '@type' => ['Organization', 'LocalBusiness'],
+            '@id' => $orgId,
+            'name' => $siteName,
+            'alternateName' => ['Pak Namak', 'پاک نمک اینڈ مصالحہ جات'],
+            'url' => route('home'),
+            'logo' => asset('images/logo-480.png'),
+            'image' => asset('images/og-image.jpg'),
+            'description' => config('seo.default_description'),
+            'telephone' => $settings['phone'] ?? null,
+            'email' => $settings['email'] ?? null,
+            'foundingDate' => $settings['founded_year'] ?? null,
+            'priceRange' => 'Rs',
+            'address' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => 'Basti Dhore Wala Stop, near Adda Bahawalwah, Melsi–Multan Road',
+                'addressLocality' => 'Melsi',
+                'addressRegion' => 'Punjab',
+                'postalCode' => '61180',
+                'addressCountry' => 'PK',
+            ],
+            'geo' => ['@type' => 'GeoCoordinates', 'latitude' => 29.9171363, 'longitude' => 71.9900305],
+            'hasMap' => $settings['map_url'] ?? null,
+            'areaServed' => ['Melsi', 'Vehari', 'Multan', 'Burewala', 'Khanewal', 'Punjab'],
+            'sameAs' => array_values(array_filter([$settings['facebook'] ?? null, $settings['tiktok'] ?? null, $settings['youtube'] ?? null, $settings['instagram'] ?? null])),
+        ]),
+        [
+            '@type' => 'WebSite',
+            '@id' => route('home').'#website',
+            'url' => route('home'),
+            'name' => $siteName,
+            'inLanguage' => ['en', 'ur'],
+            'publisher' => ['@id' => $orgId],
+        ],
+    ];
+    if ($seoDefaults && $routeName !== 'home') {
+        $graph[] = [
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => route('home')],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => $seoDefaults['label'], 'item' => $canonical],
+            ],
+        ];
+    }
+@endphp
+    <title>{{ $pageTitle }}</title>
+    <meta name="description" content="{{ $pageDescription }}">
+    <meta name="robots" content="{{ $robots }}">
+    <link rel="canonical" href="{{ $canonical }}">
+    @if(!empty($settings['google_site_verification']))
+        <meta name="google-site-verification" content="{{ $settings['google_site_verification'] }}">
+    @endif
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_PK">
+    <meta property="og:locale:alternate" content="ur_PK">
+    <meta property="og:site_name" content="{{ $siteName }}">
+    <meta property="og:title" content="{{ $pageTitle }}">
+    <meta property="og:description" content="{{ $pageDescription }}">
+    <meta property="og:url" content="{{ $canonical }}">
+    <meta property="og:image" content="{{ $pageImage }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{ $siteName }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $pageTitle }}">
+    <meta name="twitter:description" content="{{ $pageDescription }}">
+    <meta name="twitter:image" content="{{ $pageImage }}">
+
+    <script type="application/ld+json">{!! json_encode(['@context' => 'https://schema.org', '@graph' => $graph], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
+    @stack('schema')
+
+    <meta name="theme-color" content="#00463b">
     <link rel="icon" href="{{ asset('images/favicon.png') }}" sizes="32x32">
+    <link rel="icon" href="{{ asset('images/icon-192.png') }}" sizes="192x192">
     <link rel="apple-touch-icon" href="{{ asset('images/icon-192.png') }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    @stack('preload')
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/site.css') }}?v={{ filemtime(public_path('css/site.css')) }}">
+
+    @if($tagId)
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ $tagId }}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', @json($tagId));
+        </script>
+    @endif
 </head>
 <body>
 @php
-    $orderUrl = $settings['order_url'] ?? '#';
     $menu = [
-        ['Home', route('home'), request()->routeIs('home')],
-        ['Shop', route('shop'), request()->routeIs('shop')],
-        ['Order Now', $orderUrl, false],
-        ['About Us', route('about'), request()->routeIs('about')],
-        ['Contact Us', route('contact'), request()->routeIs('contact')],
+        ['Home', route('home'), request()->routeIs('home'), []],
+        ['Shop', route('shop'), request()->routeIs('shop'), []],
+        ['FAQs', route('faqs'), request()->routeIs('faqs'), []],
+        ['About Us', route('about'), request()->routeIs('about'), []],
+        ['Become a Dealer', route('dealer'), request()->routeIs('dealer'), []],
+        ['Contact Us', route('contact'), request()->routeIs('contact'), []],
     ];
 @endphp
 
@@ -40,13 +144,22 @@
 <header id="main-header">
     <div class="container">
         <div class="logo_container">
-            <a href="{{ route('home') }}"><img src="{{ asset('images/logo.png') }}" alt="Pak Namak and Masala Jaat PVT Limited" id="logo"></a>
+            <a href="{{ route('home') }}"><img src="{{ asset('images/logo-160.png') }}" width="80" height="80" alt="Pak Namak and Masala Jaat PVT Limited" id="logo"></a>
         </div>
         <div id="et-top-navigation">
             <nav id="top-menu-nav">
                 <ul id="top-menu">
-                    @foreach($menu as [$label, $url, $active])
-                        <li @class(['current-menu-item' => $active])><a href="{{ $url }}">{{ $label }}</a></li>
+                    @foreach($menu as [$label, $url, $active, $children])
+                        <li @class(['current-menu-item' => $active, 'menu-item-has-children' => $children])>
+                            <a href="{{ $url }}">{{ $label }}</a>
+                            @if($children)
+                                <ul class="sub-menu">
+                                    @foreach($children as $childLabel => $childUrl)
+                                        <li><a href="{{ $childUrl }}">{{ $childLabel }}</a></li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </li>
                     @endforeach
                 </ul>
             </nav>
@@ -57,8 +170,14 @@
             </div>
         </div>
         <ul id="mobile_menu" class="et_mobile_menu">
-            @foreach($menu as [$label, $url, $active])
-                <li><a href="{{ $url }}">{{ $label }}</a></li>
+            @foreach($menu as [$label, $url, $active, $children])
+                @if($children)
+                    @foreach($children as $childLabel => $childUrl)
+                        <li><a href="{{ $childUrl }}">{{ $childLabel }}</a></li>
+                    @endforeach
+                @else
+                    <li><a href="{{ $url }}">{{ $label }}</a></li>
+                @endif
             @endforeach
         </ul>
     </div>
@@ -71,7 +190,10 @@
         <footer id="main-footer">
             <div id="footer-bottom">
                 <div class="container">
-                    <div id="footer-info">Powered By @ Pak Namak &amp; Masala Jaat (pvt) Limited</div>
+                    <div id="footer-info">
+                        <span>Powered By @ Pak Namak &amp; Masala Jaat (pvt) Limited</span>
+                        <span class="footer-links"><a href="{{ route('dealer') }}">Become a Dealer</a><a href="{{ route('faqs') }}">FAQs</a><a href="{{ route('privacy') }}">Privacy Policy</a><a href="{{ route('terms') }}">Terms</a></span>
+                    </div>
                 </div>
             </div>
         </footer>

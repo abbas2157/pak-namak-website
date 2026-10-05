@@ -14,7 +14,12 @@
     RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
 
     # Serve real files (css, images, storage uploads) from public/
-    RewriteRule ^((css|js|images|storage|build)/.+|favicon\.ico|robots\.txt)$ public/$1 [END]
+    RewriteRule ^((css|js|images|storage|build)/.+|favicon\.ico|robots\.txt|site\.webmanifest)$ public/$1 [END]
+
+    # 301 old WordPress-style trailing-slash URLs (/shop/ -> /shop) so indexed links keep their ranking
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
 
     # Everything else (including .env, vendor/, storage/ etc.) goes to Laravel
     RewriteRule ^ index.php [END]

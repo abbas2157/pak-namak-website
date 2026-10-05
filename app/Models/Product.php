@@ -25,7 +25,7 @@ class Product extends Model
     public function getImageUrlAttribute(): string
     {
         if (! $this->image) {
-            return asset('images/packet-salt.jpeg');
+            return asset('images/product-placeholder.svg');
         }
 
         return str_starts_with($this->image, 'images/') ? asset($this->image) : asset('storage/'.$this->image);

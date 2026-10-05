@@ -5,6 +5,7 @@
 @section('content')
     <div class="stats">
         <div class="stat accent"><div class="num">{{ $stats['inquiries_unread'] }}</div><div class="lbl">Unread inquiries</div></div>
+        <div class="stat accent"><div class="num">{{ $stats['dealers_new'] }}</div><div class="lbl"><a href="{{ route('admin.dealers.index', ['status' => 'new']) }}">New dealer leads</a></div></div>
         <div class="stat"><div class="num">{{ $stats['inquiries_month'] }}</div><div class="lbl">Inquiries this month</div></div>
         <div class="stat"><div class="num">{{ $stats['inquiries_total'] }}</div><div class="lbl">Total inquiries</div></div>
         <div class="stat"><div class="num">{{ $stats['products_active'] }}</div><div class="lbl">Active products</div></div>

@@ -37,6 +37,9 @@ class DatabaseSeeder extends Seeder
             'hero_text_ur' => "پاک نمک اینڈ مصالحہ جات معیاری نمک کی خریداری اور صفائی سے پسائی کے ذریعے خالص اور بہترین مصنوعات فراہم کرتا ہے۔\nہم دلا نمک، کھلا نمک، پیک شدہ نمک اور ہر قسم کے اعلیٰ معیار کے مصالحہ جات فراہم کرتے ہیں۔\nہماری ترجیح تازگی، معیار اور مناسب قیمت پر بہترین سروس دینا ہے",
             'founded_year' => '2024',
             'order_url' => 'https://admin.paknamak.pk/order',
+            'spice_order_url' => 'https://admin.paknamak.pk/spice-order',
+            'notify_email' => 'info@paknamak.pk',
+            'map_embed_url' => 'https://www.google.com/maps?q=29.9171363,71.9900305&z=15&output=embed',
         ]);
 
         $thaila = Category::updateOrCreate(['slug' => 'salt-in-thaila'], [
@@ -53,12 +56,12 @@ class DatabaseSeeder extends Seeder
             [$thaila, '50 KG Bags', 'کلو بوری50', 'تھوک خریداروں اور تجارتی استعمال کے لیے موزوں', 'images/salt-50kg.jpeg'],
             [$thaila, '10 KG Packs', '10کلو پیک', 'درمیانے درجے کی دکانوں اور ڈسٹری بیوٹرز کے لیے بہترین', 'images/salt-10kg.jpeg'],
             [$thaila, '5 KG Packs', '5کلو پیک', 'عام صارفین کے لیے مناسب', 'images/salt-5kg.jpeg'],
-            [$packed, '700G ( گرام ) (10 Packets)', null, null, 'images/packet-salt.jpeg'],
-            [$packed, '600G ( گرام ) (20 Packets)', null, null, 'images/packet-salt.jpeg'],
-            [$packed, '500G ( گرام ) (10 Packets)', null, null, 'images/packet-salt.jpeg'],
-            [$packed, '400G ( گرام ) (10 Packets)', null, null, 'images/packet-salt.jpeg'],
-            [$packed, '300G ( گرام ) (20 Packets)', null, null, 'images/packet-salt.jpeg'],
-            [$packed, '250G ( گرام ) (20 Packets)', null, null, 'images/packet-salt.jpeg'],
+            [$packed, '700G ( گرام ) (10 Packets)', null, null, 'images/packet-salt-225.jpg'],
+            [$packed, '600G ( گرام ) (20 Packets)', null, null, 'images/packet-salt-225.jpg'],
+            [$packed, '500G ( گرام ) (10 Packets)', null, null, 'images/packet-salt-225.jpg'],
+            [$packed, '400G ( گرام ) (10 Packets)', null, null, 'images/packet-salt-225.jpg'],
+            [$packed, '300G ( گرام ) (20 Packets)', null, null, 'images/packet-salt-225.jpg'],
+            [$packed, '250G ( گرام ) (20 Packets)', null, null, 'images/packet-salt-225.jpg'],
         ];
         foreach ($products as $i => [$cat, $name, $nameUr, $desc, $img]) {
             Product::updateOrCreate(['slug' => Str::slug($name)], [
@@ -68,11 +71,11 @@ class DatabaseSeeder extends Seeder
         }
 
         $team = [
-            ['Ghazanfar Abbas', 'Chief Financial Officer (CFO)', 'Responsible for financial planning, budgeting, accounting oversight, and maintaining financial stability of the organization.', 'مالی معاملات، بجٹ سازی، اکاؤنٹس اور ادارے کے مالی استحکام کی نگرانی کرتے ہیں۔', 'images/team-ghazanfar.jpg',
+            ['Ghazanfar Abbas', 'Chief Financial Officer (CFO)', 'Responsible for financial planning, budgeting, accounting oversight, and maintaining financial stability of the organization.', 'مالی معاملات، بجٹ سازی، اکاؤنٹس اور ادارے کے مالی استحکام کی نگرانی کرتے ہیں۔', 'images/team-ghazanfar-480.jpg',
                 ['facebook' => 'https://www.facebook.com/ghazanfar.abbas.5076']],
-            ['Safdar Jabbar', 'Chief Operating Officer (COO)', 'Oversees day-to-day operations, production management, supply chain coordination, and operational efficiency.', 'روزمرہ امور، پیداوار، سپلائی چین اور آپریشنز کی نگرانی کرتے ہیں تاکہ نظام مؤثر اور منظم طریقے سے چلتا رہے۔', 'images/team-safdar.jpg',
+            ['Safdar Jabbar', 'Chief Operating Officer (COO)', 'Oversees day-to-day operations, production management, supply chain coordination, and operational efficiency.', 'روزمرہ امور، پیداوار، سپلائی چین اور آپریشنز کی نگرانی کرتے ہیں تاکہ نظام مؤثر اور منظم طریقے سے چلتا رہے۔', 'images/team-safdar-480.jpg',
                 ['facebook' => 'https://www.facebook.com/chita.jutt.9', 'tiktok' => 'https://www.tiktok.com/@chitta.g91', 'whatsapp' => 'https://wa.link/2jvn0s']],
-            ['Mudassar Abbas', 'Chief Executive Officer (CEO)', 'Overall leader and primary decision-maker responsible for strategic planning, business development, and organizational direction.', 'ادارے کے مجموعی سربراہ اور اہم فیصلوں کے ذمہ دار۔ کاروباری حکمتِ عملی، منصوبہ بندی اور مستقبل کی سمت کا تعین کرتے ہیں۔', 'images/team-mudassar.jpg',
+            ['Mudassar Abbas', 'Chief Executive Officer (CEO)', 'Overall leader and primary decision-maker responsible for strategic planning, business development, and organizational direction.', 'ادارے کے مجموعی سربراہ اور اہم فیصلوں کے ذمہ دار۔ کاروباری حکمتِ عملی، منصوبہ بندی اور مستقبل کی سمت کا تعین کرتے ہیں۔', 'images/team-mudassar-480.jpg',
                 ['facebook' => 'https://www.facebook.com/mudassar.abbas.9277/', 'tiktok' => 'https://www.tiktok.com/@mudassarabbas77', 'linkedin' => 'https://www.linkedin.com/in/mudassar-abbas-8267b8113/', 'twitter' => 'https://x.com/abbas8156']],
         ];
         foreach ($team as $i => [$name, $title, $bio, $bioUr, $photo, $socials]) {
@@ -133,5 +136,10 @@ class DatabaseSeeder extends Seeder
                 'question_ur' => $qUr, 'answer' => $a, 'answer_ur' => $aUr, 'sort_order' => $i + 1,
             ]);
         }
+
+        // Answers still holding "[confirm ...]" placeholders stay hidden until edited in the dashboard.
+        Faq::where('answer', 'like', '%[%')->update(['is_active' => false]);
+
+        $this->call(MasalaSeeder::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\DealerApplication;
 use App\Models\Inquiry;
 use App\Models\Setting;
 use Illuminate\Pagination\Paginator;
@@ -25,7 +26,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('layouts.admin', function ($view) {
-            $view->with('unreadInquiries', Inquiry::where('is_read', false)->count());
+            $view->with([
+                'unreadInquiries' => Inquiry::where('is_read', false)->count(),
+                'newDealers' => DealerApplication::where('status', 'new')->count(),
+            ]);
         });
     }
 }

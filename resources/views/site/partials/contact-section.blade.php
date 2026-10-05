@@ -7,7 +7,7 @@
     <div class="et_pb_row">
         <div class="col col-1_2">
             <div class="mod mb-0"><h4 class="h24 c-white">{{ $settings['site_name'] ?? 'Pak Namak & Masala Jaat (PVT) Limited' }}</h4></div>
-            <div class="mod txt16 c-white"><p class="t-right">پاک نمک اینڈ مصالحہ جات معیاری نمک کی خریداری اور صفائی سے پسائی کے ذریعے خالص اور بہترین مصنوعات فراہم کرتا ہے</p></div>
+            <div class="mod txt16 c-white"><p lang="ur" class="t-right">پاک نمک اینڈ مصالحہ جات معیاری نمک کی خریداری اور صفائی سے پسائی کے ذریعے خالص اور بہترین مصنوعات فراہم کرتا ہے</p></div>
             @include('site.partials.social', ['links' => $socialOrder ?? [
                 'facebook' => $settings['facebook'] ?? null,
                 'tiktok' => $settings['tiktok'] ?? null,

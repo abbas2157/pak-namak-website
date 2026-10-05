@@ -23,6 +23,9 @@
             <a href="{{ route('admin.inquiries.index') }}" @class(['active' => request()->routeIs('admin.inquiries.*')])>
                 Inquiries @if($unreadInquiries)<span class="badge-count">{{ $unreadInquiries }}</span>@endif
             </a>
+            <a href="{{ route('admin.dealers.index') }}" @class(['active' => request()->routeIs('admin.dealers.*')])>
+                Dealer Leads @if($newDealers)<span class="badge-count">{{ $newDealers }}</span>@endif
+            </a>
 
             <div class="label">Catalogue</div>
             <a href="{{ route('admin.products.index') }}" @class(['active' => request()->routeIs('admin.products.*')])>Products</a>
@@ -32,6 +35,7 @@
             <a href="{{ route('admin.team.index') }}" @class(['active' => request()->routeIs('admin.team.*')])>Team</a>
             <a href="{{ route('admin.faqs.index') }}" @class(['active' => request()->routeIs('admin.faqs.*')])>FAQs</a>
             <a href="{{ route('admin.settings.edit') }}" @class(['active' => request()->routeIs('admin.settings.*')])>Site Settings</a>
+            <a href="{{ route('admin.seo.edit') }}" @class(['active' => request()->routeIs('admin.seo.*')])>SEO</a>
 
             <div class="label">Account</div>
             <a href="{{ route('admin.account.edit') }}" @class(['active' => request()->routeIs('admin.account.*')])>My Account</a>

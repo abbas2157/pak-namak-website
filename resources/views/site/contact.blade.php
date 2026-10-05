@@ -1,6 +1,7 @@
 @extends('layouts.site')
 
 @section('title', 'Contact Us')
+@section('description', 'Contact Pak Namak for salt and masala orders or bulk inquiries. Call or WhatsApp +92 307 8479818, email info@paknamak.pk, or visit us on Melsi–Multan Road.')
 
 @section('content')
     @php
@@ -18,9 +19,9 @@
     <div class="et_pb_section">
         <div class="et_pb_row row-wide bg-white">
             <div class="col col-1_2">
-                <div class="mod mb-10" style="color:#d9d9d9"><h4 class="h14up c-orange t-right">رابطہ کیجیے</h4></div>
-                <div class="mod mb-10"><h1 class="h72 c-green t-right">ہم سے رابطہ کریں</h1></div>
-                <div class="mod txt16" style="margin-top:7px"><p class="t-right">معیاری نمک اور مصالحہ جات کے آرڈرز یا تھوک معلومات کے لیے آج ہی ہم سے رابطہ کریں۔<br>ہماری ٹیم آپ کو بروقت اور بہترین سروس فراہم کرنے کے لیے تیار ہے۔</p></div>
+                <div class="mod mb-10" style="color:#d9d9d9"><h4 lang="ur" class="h14up c-orange t-right">رابطہ کیجیے</h4></div>
+                <div class="mod mb-10"><h2 lang="ur" class="h72 c-green t-right">ہم سے رابطہ کریں</h2></div>
+                <div class="mod txt16" style="margin-top:7px"><p lang="ur" class="t-right">معیاری نمک اور مصالحہ جات کے آرڈرز یا تھوک معلومات کے لیے آج ہی ہم سے رابطہ کریں۔<br>ہماری ٹیم آپ کو بروقت اور بہترین سروس فراہم کرنے کے لیے تیار ہے۔</p></div>
                 <div class="mod mb-10"><h1 class="h72 c-green t-left">Contact Us</h1></div>
                 <div class="mod txt16" style="margin-top:7px"><p>Contact us today for quality salt and masala orders or bulk inquiries.<br>Our team is ready to assist you with reliable service and quick response.</p></div>
                 @include('site.partials.social', ['links' => $socials])
@@ -77,6 +78,24 @@
             </div>
         </div>
     </div>
+
+    {{-- Section 1: map --}}
+    @if(!empty($settings['map_embed_url']))
+        <div class="et_pb_section">
+            <div class="et_pb_row">
+                <div class="col col-4_4">
+                    <div class="mod mb-10"><h2 class="h52 t-left">Visit Us</h2></div>
+                    <div class="mod mb-10"><h2 lang="ur" class="t-right">{{ $settings['address'] ?? '' }}</h2></div>
+                    <div class="mod map-embed">
+                        <iframe src="{{ $settings['map_embed_url'] }}" title="Pak Namak location on Google Maps" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                    </div>
+                    @if(!empty($settings['map_url']))
+                        <div class="mod btn-wrap" style="margin-top:20px"><a class="et_pb_button btn-green" href="{{ $settings['map_url'] }}" target="_blank" rel="noopener">Get Directions</a></div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    @endif
 
     @include('site.partials.contact-section')
 @endsection
