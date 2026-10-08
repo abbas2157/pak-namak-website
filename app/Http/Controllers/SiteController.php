@@ -22,14 +22,14 @@ class SiteController extends Controller
         return view('site.home');
     }
 
-    public function shop()
+    public function products()
     {
         $categories = Category::with(['products' => fn ($q) => $q->active()])
             ->orderBy('sort_order')
             ->get()
             ->filter(fn ($c) => $c->products->isNotEmpty());
 
-        return view('site.shop', compact('categories'));
+        return view('site.products', compact('categories'));
     }
 
     public function faqs()
@@ -121,7 +121,7 @@ class SiteController extends Controller
     {
         $pages = [
             [route('home'), '1.0'],
-            [route('shop'), '0.9'],
+            [route('products'), '0.9'],
             [route('faqs'), '0.7'],
             [route('about'), '0.6'],
             [route('dealer'), '0.7'],

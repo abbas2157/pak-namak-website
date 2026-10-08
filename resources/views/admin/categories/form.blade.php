@@ -18,6 +18,16 @@
                 <input type="number" min="0" id="sort_order" name="sort_order" value="{{ old('sort_order', $category->sort_order ?? 0) }}">
             </div>
             <div class="field full">
+                <label for="layout">Layout on Products page</label>
+                <select id="layout" name="layout">
+                    @foreach(App\Models\Category::LAYOUTS as $value => $label)
+                        <option value="{{ $value }}" @selected(old('layout', $category->layout ?? 'cards') === $value)>{{ $label }}</option>
+                    @endforeach
+                </select>
+                <div class="hint">Use “Size table” when every product is the same item in a different size (like Packed Salt).</div>
+                @error('layout')<div class="error">{{ $message }}</div>@enderror
+            </div>
+            <div class="field full">
                 <label for="name_ur">Urdu subtitle</label>
                 <input type="text" id="name_ur" name="name_ur" class="ur" dir="rtl" value="{{ old('name_ur', $category->name_ur) }}">
             </div>

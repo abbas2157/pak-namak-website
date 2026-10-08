@@ -13,6 +13,8 @@ class SettingController extends Controller
         'tagline_ur' => ['Tagline (Urdu)', 'nullable|string|max:150'],
         'hero_text_ur' => ['Home intro text (Urdu)', 'nullable|string|max:2000'],
         'founded_year' => ['Founded year', 'nullable|string|max:10'],
+        'ntn' => ['NTN registration number (shown in footer)', 'nullable|string|max:30'],
+        'business_hours' => ['Business hours (shown in footer, e.g. Mon–Sat 9am–7pm)', 'nullable|string|max:100'],
         'phone' => ['Phone', 'required|string|max:30'],
         'whatsapp' => ['WhatsApp number (digits only, with country code)', 'nullable|regex:/^\d{8,15}$/'],
         'email' => ['Email', 'required|email|max:150'],

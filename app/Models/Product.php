@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
-    protected $fillable = ['category_id', 'name', 'name_ur', 'slug', 'description', 'image', 'price', 'is_active', 'sort_order'];
+    public const PACK_SIZES = ['50g', '100g', '200g', '250g', '500g', '1kg', '2kg', '5kg', '10kg'];
 
-    protected $casts = ['is_active' => 'boolean', 'price' => 'decimal:2'];
+    protected $fillable = ['category_id', 'name', 'name_ur', 'slug', 'description', 'image', 'price', 'pack_sizes', 'is_active', 'sort_order'];
+
+    protected $casts = ['is_active' => 'boolean', 'price' => 'decimal:2', 'pack_sizes' => 'array'];
 
     public function category(): BelongsTo
     {

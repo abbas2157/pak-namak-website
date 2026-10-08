@@ -15,7 +15,7 @@
                 <div class="mod mb-10 t-center" style="color:#d9d9d9"><h2 lang="ur"><span style="color:#fff">{{ $settings['tagline_ur'] ?? 'خالص نمک، خالص زندگی' }}</span></h2></div>
                 <div class="mod mb-10 t-center"><h1 class="h72 c-white">{{ $settings['site_name'] ?? 'Pak Namak & Masala Jaat (PVT) Limited' }}</h1></div>
                 <div class="mod t-center txt16 c-white" style="padding-top:1px;margin-bottom:30px"><p lang="ur">{!! nl2br(e($settings['hero_text_ur'] ?? '')) !!}</p></div>
-                <div class="mod btn-wrap t-center"><a class="et_pb_button btn-white" href="{{ route('shop') }}">Our Products</a></div>
+                <div class="mod btn-wrap t-center"><a class="et_pb_button btn-white" href="{{ route('products') }}">Our Products</a></div>
             </div>
         </div>
     </div>
@@ -100,5 +100,4 @@
         </div>
     </div>
 
-    @include('site.partials.contact-section')
 @endsection

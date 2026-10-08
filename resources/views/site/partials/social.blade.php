@@ -15,7 +15,7 @@
     <ul @class(['mod social-follow', $class ?? ''])>
         @foreach($links as $network => $url)
             @isset($icons[$network])
-                <li><a href="{{ $url }}" class="sn-{{ $network }}" title="Follow on {{ ucfirst($network) }}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="{{ $icons[$network] }}"/></svg></a></li>
+                <li><a href="{{ $url }}" class="sn-{{ $network }}" title="Follow on {{ ucfirst($network) }}" aria-label="{{ ucfirst($network) }}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="{{ $icons[$network] }}"/></svg></a></li>
             @endisset
         @endforeach
     </ul>

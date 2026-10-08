@@ -116,11 +116,11 @@
         </script>
     @endif
 </head>
-<body>
+<body id="top">
 @php
     $menu = [
         ['Home', route('home'), request()->routeIs('home'), []],
-        ['Shop', route('shop'), request()->routeIs('shop'), []],
+        ['Products', route('products'), request()->routeIs('products'), []],
         ['FAQs', route('faqs'), request()->routeIs('faqs'), []],
         ['About Us', route('about'), request()->routeIs('about'), []],
         ['Become a Dealer', route('dealer'), request()->routeIs('dealer'), []],
@@ -132,10 +132,10 @@
     <div class="container">
         <div id="et-info">
             @if(!empty($settings['phone']))
-                <span id="et-info-phone"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>{{ $settings['phone'] }}</span>
+                <span id="et-info-phone"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>{{ $settings['phone'] }}</span>
             @endif
             @if(!empty($settings['email']))
-                <a href="mailto:{{ $settings['email'] }}"><span id="et-info-email"><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>{{ $settings['email'] }}</span></a>
+                <a href="mailto:{{ $settings['email'] }}"><span id="et-info-email"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>{{ $settings['email'] }}</span></a>
             @endif
         </div>
     </div>
@@ -165,7 +165,7 @@
             </nav>
             <div id="et_mobile_nav_menu">
                 <button class="mobile_menu_bar" aria-label="Menu" onclick="document.getElementById('mobile_menu').classList.toggle('open')">
-                    <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+                    <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
                 </button>
             </div>
         </div>
@@ -187,13 +187,97 @@
     <div id="et-main-area">
         @yield('content')
 
-        <footer id="main-footer">
-            <div id="footer-bottom">
-                <div class="container">
-                    <div id="footer-info">
-                        <span>Powered By @ Pak Namak &amp; Masala Jaat (pvt) Limited</span>
-                        <span class="footer-links"><a href="{{ route('dealer') }}">Become a Dealer</a><a href="{{ route('faqs') }}">FAQs</a><a href="{{ route('privacy') }}">Privacy Policy</a><a href="{{ route('terms') }}">Terms</a></span>
-                    </div>
+        @php
+            $ftPhone = $settings['phone'] ?? '';
+            $ftWa = $settings['whatsapp'] ?? '';
+        @endphp
+        <footer id="main-footer" class="ft">
+            <div class="container ft-grid">
+                <div class="ft-brand">
+                    <a href="{{ route('home') }}" class="ft-logo">
+                        <img src="{{ asset('images/logo-160.png') }}" width="64" height="64" alt="" loading="lazy">
+                        <span>Pak Namak<small>&amp; Masala Jaat</small></span>
+                    </a>
+                    @if(!empty($settings['tagline_ur']))<p class="ft-tagline" lang="ur" dir="rtl">{{ $settings['tagline_ur'] }}</p>@endif
+                    <p>Clean, properly ground salt and pure masala from Melsi, Punjab — packed for homes, shops and wholesale buyers.</p>
+                    @include('site.partials.social', ['class' => 'ft-social', 'links' => [
+                        'facebook' => $settings['facebook'] ?? null,
+                        'youtube' => $settings['youtube'] ?? null,
+                        'tiktok' => $settings['tiktok'] ?? null,
+                        'instagram' => $settings['instagram'] ?? null,
+                        'whatsapp' => $settings['whatsapp_link'] ?? null,
+                    ]])
+                </div>
+
+                <nav class="ft-col" aria-labelledby="ft-company">
+                    <h2 id="ft-company">Company</h2>
+                    <ul>
+                        <li><a href="{{ route('home') }}">Home</a></li>
+                        <li><a href="{{ route('about') }}">About Us</a></li>
+                        <li><a href="{{ route('faqs') }}">FAQs</a></li>
+                        <li><a href="{{ route('dealer') }}">Become a Dealer</a></li>
+                        <li><a href="{{ route('contact') }}">Contact Us</a></li>
+                    </ul>
+                </nav>
+
+                <nav class="ft-col" aria-labelledby="ft-products">
+                    <h2 id="ft-products">Products</h2>
+                    <ul>
+                        @forelse($footerCategories as $category)
+                            <li><a href="{{ route('products') }}#{{ $category->slug }}">{{ $category->name }}</a></li>
+                        @empty
+                            <li><a href="{{ route('products') }}">All products</a></li>
+                        @endforelse
+                    </ul>
+                </nav>
+
+                <div class="ft-col ft-contact">
+                    <h2>Get in touch</h2>
+                    <ul>
+                        @if(!empty($settings['address']))
+                            <li>
+                                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                                <span><span lang="ur" dir="rtl" class="ft-address">{{ $settings['address'] }}</span>
+                                @if(!empty($settings['map_url']))<a href="{{ $settings['map_url'] }}" target="_blank" rel="noopener" class="ft-more">Get directions →</a>@endif</span>
+                            </li>
+                        @endif
+                        @if($ftPhone)
+                            <li>
+                                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+                                <a href="tel:{{ preg_replace('/[^\d+]/', '', $ftPhone) }}">{{ $ftPhone }}</a>
+                            </li>
+                        @endif
+                        @if(!empty($settings['email']))
+                            <li>
+                                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                <a href="mailto:{{ $settings['email'] }}">{{ $settings['email'] }}</a>
+                            </li>
+                        @endif
+                        @if(!empty($settings['business_hours']))
+                            <li>
+                                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.4 3.2 3.2-1.4 1.4L11 13.2V6h2z"/></svg>
+                                <span>{{ $settings['business_hours'] }}</span>
+                            </li>
+                        @endif
+                    </ul>
+                    @if($ftWa)
+                        <a class="ft-wa" href="https://wa.me/{{ $ftWa }}?text={{ rawurlencode("Assalam o Alaikum, please share today's rates for Pak Namak products.") }}" target="_blank" rel="noopener">
+                            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 21.8a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zM20.5 3.5A11.8 11.8 0 0 0 1.9 17.7L.2 24l6.4-1.7A11.8 11.8 0 0 0 24 12c0-3.2-1.2-6.2-3.5-8.5z"/></svg>
+                            Get today's rates on WhatsApp
+                        </a>
+                    @endif
+                </div>
+            </div>
+
+            <div class="ft-bottom">
+                <div class="container ft-bottom-inner">
+                    <p>© {{ date('Y') }} {{ $siteName }}@if(!empty($settings['ntn']))<span class="ft-ntn">NTN {{ $settings['ntn'] }}</span>@endif</p>
+                    <ul>
+                        <li><a href="{{ route('privacy') }}">Privacy Policy</a></li>
+                        <li><a href="{{ route('terms') }}">Terms</a></li>
+                        <li><a href="{{ route('sitemap') }}">Sitemap</a></li>
+                        <li><a href="#top" class="ft-top">Back to top ↑</a></li>
+                    </ul>
                 </div>
             </div>
         </footer>

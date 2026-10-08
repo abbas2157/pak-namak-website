@@ -29,6 +29,6 @@
                 </tbody>
             </table>
         </div>
-        <p class="muted" style="margin:14px 0 0">Categories with no visible products are hidden on the Shop page.</p>
+        <p class="muted" style="margin:14px 0 0">Categories with no visible products are hidden on the Products page.</p>
     </div>
 @endsection

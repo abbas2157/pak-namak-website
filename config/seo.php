@@ -11,8 +11,8 @@ return [
             'title' => 'Pak Namak — Salt & Masala Wholesaler, Multan & Vehari',
             'description' => 'Pak Namak & Masala Jaat, Melsi: finely ground rock salt, Dalla Namak, Khulla Namak, packed salt and Masala Jaat for shops, restaurants and homes.',
         ],
-        'shop' => [
-            'label' => 'Shop',
+        'products' => [
+            'label' => 'Products',
             'title' => 'Salt Prices & Pack Sizes — 250g to 50kg Bags | Pak Namak',
             'description' => 'Salt in 50kg, 10kg and 5kg bags, retail packets from 250g to 700g, plus chilli, turmeric, garam masala and dhania. Wholesale and retail rates on request.',
         ],

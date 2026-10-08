@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Route;
 // Website
 Route::controller(SiteController::class)->group(function () {
     Route::get('/', 'home')->name('home');
-    Route::get('/shop', 'shop')->name('shop');
+    Route::get('/products', 'products')->name('products');
+    Route::permanentRedirect('/shop', '/products');
     Route::get('/faqs', 'faqs')->name('faqs');
     Route::get('/about-us', 'about')->name('about');
     Route::get('/contact-us', 'contact')->name('contact');

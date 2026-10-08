@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
 use App\Models\DealerApplication;
 use App\Models\Inquiry;
 use App\Models\Setting;
@@ -23,6 +24,12 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer(['layouts.site', 'site.*'], function ($view) {
             $view->with('settings', Schema::hasTable('settings') ? Setting::all_cached() : []);
+        });
+
+        View::composer('layouts.site', function ($view) {
+            $view->with('footerCategories', Schema::hasTable('categories')
+                ? Category::whereHas('products', fn ($q) => $q->active())->orderBy('sort_order')->get(['name', 'slug'])
+                : collect());
         });
 
         View::composer('layouts.admin', function ($view) {

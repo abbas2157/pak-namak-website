@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
@@ -58,10 +59,14 @@ class ProductController extends Controller
             'name_ur' => 'nullable|string|max:120',
             'description' => 'nullable|string|max:2000',
             'price' => 'nullable|numeric|min:0',
+            'pack_sizes' => 'nullable|array',
+            'pack_sizes.*' => ['string', Rule::in(Product::PACK_SIZES)],
             'sort_order' => 'nullable|integer|min:0',
             'image' => 'nullable|image|max:4096',
         ]);
 
+        // Keep sizes in shelf order (50g → 10kg) whatever order the boxes were ticked in.
+        $data['pack_sizes'] = array_values(array_intersect(Product::PACK_SIZES, $data['pack_sizes'] ?? [])) ?: null;
         $data['is_active'] = $request->boolean('is_active');
         $data['sort_order'] = $data['sort_order'] ?? 0;
 

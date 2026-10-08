@@ -5,7 +5,7 @@
 @section('content')
     <div class="card">
         <div class="card-head">
-            <h2>Frequently asked questions (Shop page)</h2>
+            <h2>Frequently asked questions (FAQs page)</h2>
             <a href="{{ route('admin.faqs.create') }}" class="btn">+ Add FAQ</a>
         </div>
         <div class="table-wrap">

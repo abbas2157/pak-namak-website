@@ -32,6 +32,16 @@
                 @error('price')<div class="error">{{ $message }}</div>@enderror
             </div>
             <div class="field full">
+                <span class="label">Pack sizes</span>
+                <div class="check-row">
+                    @foreach(App\Models\Product::PACK_SIZES as $size)
+                        <label class="check"><input type="checkbox" name="pack_sizes[]" value="{{ $size }}" @checked(in_array($size, old('pack_sizes', $product->pack_sizes ?? [])))> {{ $size }}</label>
+                    @endforeach
+                </div>
+                <div class="hint">Customers pick one of these on the Products page before ordering. Leave all unticked if the product has a single size.</div>
+                @error('pack_sizes.*')<div class="error">{{ $message }}</div>@enderror
+            </div>
+            <div class="field full">
                 <label for="description">Description (Urdu or English)</label>
                 <textarea id="description" name="description">{{ old('description', $product->description) }}</textarea>
             </div>

@@ -56,6 +56,7 @@ class CategoryController extends Controller
             'name' => 'required|string|max:120',
             'slug' => ['required', Rule::unique('categories', 'slug')->ignore($category)],
             'name_ur' => 'nullable|string|max:200',
+            'layout' => ['required', Rule::in(array_keys(Category::LAYOUTS))],
             'sort_order' => 'nullable|integer|min:0',
         ], ['slug.unique' => 'A category with this name already exists.']);
         $data['sort_order'] = $data['sort_order'] ?? 0;

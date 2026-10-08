@@ -70,7 +70,7 @@ tr.unread td { font-weight: 600; background: #fffaf3; }
 
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .form-grid .full { grid-column: 1 / -1; }
-.field label { display: block; font-weight: 600; margin-bottom: 6px; }
+.field label, .field .label { display: block; font-weight: 600; margin-bottom: 6px; }
 .field input[type=text], .field input[type=email], .field input[type=password], .field input[type=number], .field input[type=url], .field input[type=file], .field select, .field textarea {
     width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font: inherit; background: #fff; color: var(--text);
 }
@@ -80,6 +80,8 @@ tr.unread td { font-weight: 600; background: #fffaf3; }
 .field .hint { color: var(--muted); font-size: 12px; margin-top: 4px; }
 .field .error { color: var(--danger); font-size: 13px; margin-top: 4px; }
 .check { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.check-row { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 6px 0 2px; }
+.check-row .check { font-weight: 500; }
 .form-actions { display: flex; gap: 10px; margin-top: 22px; }
 .preview { max-width: 140px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--border); }
 

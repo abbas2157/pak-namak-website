@@ -14,12 +14,11 @@
                 <div class="mod txt16 t-center" style="margin-bottom:30px"><p lang="ur">معذرت، آپ جس صفحے کی تلاش میں ہیں وہ موجود نہیں ہے۔</p></div>
                 <div class="mod error-actions">
                     <a class="et_pb_button btn-green" href="{{ route('home') }}">Go Home</a>
-                    <a class="et_pb_button btn-green" href="{{ route('shop') }}">Our Products</a>
+                    <a class="et_pb_button btn-green" href="{{ route('products') }}">Our Products</a>
                     <a class="et_pb_button btn-green" href="{{ route('contact') }}">Contact Us</a>
                 </div>
             </div>
         </div>
     </div>
 
-    @include('site.partials.contact-section')
 @endsection

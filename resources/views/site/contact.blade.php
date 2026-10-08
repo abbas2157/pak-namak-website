@@ -97,5 +97,4 @@
         </div>
     @endif
 
-    @include('site.partials.contact-section')
 @endsection

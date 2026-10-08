@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
-    protected $fillable = ['name', 'name_ur', 'slug', 'sort_order'];
+    public const LAYOUTS = [
+        'cards' => 'Cards — one card per product',
+        'table' => 'Size table — one photo with a row per product',
+    ];
+
+    protected $fillable = ['name', 'name_ur', 'slug', 'layout', 'sort_order'];
 
     public function products(): HasMany
     {

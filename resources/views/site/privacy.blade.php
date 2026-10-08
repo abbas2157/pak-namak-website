@@ -49,5 +49,4 @@
 
 @section('content')
     @include('site.partials.legal-page', ['heading' => 'Privacy Policy', 'updated' => '5 October 2026'])
-    @include('site.partials.contact-section')
 @endsection

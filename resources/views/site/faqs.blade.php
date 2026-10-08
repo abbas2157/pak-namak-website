@@ -52,5 +52,4 @@
         </div>
     </div>
 
-    @include('site.partials.contact-section')
 @endsection
